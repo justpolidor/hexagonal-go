@@ -13,6 +13,16 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Cache
+      uses: actions/cache@v3.0.7
+      with:
+        path: |
+          ~/.cache/go-build
+          ~/go/pkg/mod
+        key: ${{ runner.os }}-golang-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-golang-
+
     - name: Set up Go
       uses: actions/setup-go@v3
       with:
@@ -20,9 +30,6 @@ jobs:
 
     - name: Build
       run: go build -v ./...
-
-    - name: Test
-      run: go test -v ./...
     
     - name: Archive build
       uses: actions/upload-artifact@v3
