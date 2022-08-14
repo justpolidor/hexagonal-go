@@ -23,3 +23,10 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+    
+    - name: Archive build
+      uses: actions/upload-artifact@v3
+      with:
+        name: hexagonal-go
+        path: hexagonal-go
+        retention-days: 5
